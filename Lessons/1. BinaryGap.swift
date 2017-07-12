@@ -22,7 +22,7 @@ expected worst-case space complexity is O(1).
 Copyright 2009–2017 by Codility Limited. All Rights Reserved. Unauthorized copying, publication or disclosure prohibited.
 */
 
-// RESULT: 80% CORRECTNESS
+// RESULT: 100% CORRECTNESS
 
 import Foundation
 import Glibc
@@ -31,29 +31,38 @@ import Glibc
 // print("this is a debug message")
 
 public func solution(_ N : Int) -> Int {
-    // write your code in Swift 3.0 (Linux)    
-    let binaryRep = toBinary(N)
-    var binaryGap = 0
+    // write your code in Swift 3.0 (Linux)
+    var binary = toBinary(N)
     
-    let gaps = binaryRep.characters.split(separator: "1")
-
-    let gapsCount = gaps.map({
-        return $0.count
-    })
+    var gaps : [Int] = [0]
+    var gapcounter = 0
+    var ingap = false
     
-    if gapsCount.max() != nil {
-        binaryGap = gapsCount.max()!
+    for char in binary.characters {
+        if char == "1" {
+            if ingap {
+                gaps.append(gapcounter)
+                gapcounter = 0
+            } else {
+                ingap = true
+            }
+        }
+        else if char == "0" && ingap {
+            gapcounter += 1
+        }
     }
-
-    return binaryGap
+    
+    return gaps.max()!
 }
 
 public func toBinary(_ number: Int) -> String {
-    var binary = ""
-    var divResult = number
-    while (divResult != 0) {
-        binary = binary + String(divResult % 2)
-        divResult = divResult / 2
+    var currentValue = number
+    var binaryRep = ""
+    
+    while (currentValue != 0) {
+        binaryRep = binaryRep + String(currentValue % 2)
+        currentValue = currentValue / 2
     }
-    return binary
+    
+    return binaryRep
 }
