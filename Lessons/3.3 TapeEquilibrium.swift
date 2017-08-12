@@ -86,3 +86,23 @@ public func solution(_ A : inout [Int]) -> Int {
 
   return minDif
 }
+
+
+// @Valbrand solution translated to swift
+var lhs = 0
+var rhs = A.reduce(0, { x, y in
+    x + y
+})
+var minDif = Int.max
+
+for index in 0..<A.count {
+    lhs += A[index]
+    rhs -= A[index]
+    
+    let currentDif = abs(lhs - rhs)
+    if currentDif < minDif {
+        minDif = currentDif
+    }
+}
+
+return minDif
