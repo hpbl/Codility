@@ -89,3 +89,30 @@ public func solution(_ A : inout [Int]) -> Int {
 
     return 1
 }
+
+// @Valbrand inspired answer
+public func solution(_ A : inout [Int]) -> Int {
+    // write your code in Swift 3.0 (Linux)
+    var occur: [Int : Int] = [:]
+    var sum = 0
+
+    let min = A.min()!
+
+    if (min > 1) {
+       return 0
+    }
+
+
+    for element in A {
+        if occur[element] != nil {
+           return 0
+        } else {
+            occur[element] = 1
+        }
+        
+        sum = sum + element
+    }
+
+
+    return sum == (A.count * (A.count + 1) / 2) ? 1 : 0
+}
